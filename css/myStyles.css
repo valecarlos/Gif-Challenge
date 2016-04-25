@@ -1,6 +1,7 @@
 body{
 	margin: 0px;
 	background-color: #3A4D56;
+	font-family: Arial, Helvetica, sans-serif;
 }
 .wrapper{
 	width: 100%;
@@ -85,6 +86,24 @@ body{
   display: table;
   clear: both;
 }
+
+.container h5{
+	text-transform: uppercase;
+	font-weight: bold;
+	color: gray;
+}
+.container dt h5{
+	margin-top: 10px;
+}
+
+.container dd h5{
+	margin-top: 0px;
+}
+
+.container p{
+	color: #A5A5A5;
+}
+
 
 [class*='grid-'] {
   float: left;
