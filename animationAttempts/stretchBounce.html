@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style> 
+.title{height:50px; background-color:pink;}
+.wrapper{height: 100px; position:relative; background-color:blue}
+
+.open, .close{
+    width: 300px;
+    overflow: hidden;
+    position: absolute;
+    top: 0px;
+    bottom: 10px;
+    background-color: yellow;
+    border: 1px solid black;
+}
+
+.open:hover{
+    animation-name: opening;
+    animation-duration: 1s;
+}
+
+.close:hover{
+    animation-name: closing;
+    animation-duration: 1s;
+}
+
+@keyframes opening{
+    0% {bottom: 10px;}
+    40% {bottom: -10px;}
+    65% {bottom: 10px;}
+    85% {bottom: -5px;}
+    100% {bottom: 10px;}
+}
+
+@keyframes closing{
+    0% {bottom: 10px;}
+    40% {bottom: 110%;}
+    65% {bottom: 100%;}
+    85% {bottom: 105%;}
+    100% {bottom: 100%;}
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+<div class="open">
+This is an attempt to recreate the animation displayed in the gif, it is not a very straight forward to do kind of animation so i have to 
+try and use different approaches.
+This is an attempt to recreate the animation displayed in the gif, it is not a very straight forward to do kind of animation so i have to 
+try and use different approaches.
+This is an attempt to recreate the animation displayed in the gif, it is not a very straight forward to do kind of animation so i have to 
+try and use different approaches.
+</div>
+</div>
+<div class="title">
+title
+</div>
+<div class="wrapper">
+<div class="close">
+This is an attempt to recreate the animation displayed in the gif, it is not a very straight forward to do kind of animation so i have to 
+try and use different approaches.
+This is an attempt to recreate the animation displayed in the gif, it is not a very straight forward to do kind of animation so i have to 
+try and use different approaches.
+This is an attempt to recreate the animation displayed in the gif, it is not a very straight forward to do kind of animation so i have to 
+try and use different approaches.
+</div>
+</div>
+</body>
+</html>

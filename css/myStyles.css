@@ -11,8 +11,19 @@ body, .wrapper, .container, dd ,.container div {
 	width: 100%;
 	max-width: 360px;
 	margin: 10px auto;
+	overflow: hidden;
 }
 
+#titleContainer{
+	color: white;
+	font-size: large;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-weight: bold;
+	text-transform: uppercase;
+	max-width: 100px;
+}
 .container{
 	background-color: #D4D4D4;
 	padding: 20px;
@@ -27,6 +38,7 @@ body, .wrapper, .container, dd ,.container div {
 }
 
 .header button{
+	float: left;
 	margin: 10px;
 	border: 1px solid transparent;
 	background-color: transparent;
@@ -60,9 +72,29 @@ body, .wrapper, .container, dd ,.container div {
 	margin-top: 4px;
 	background-color: white;
 	margin-bottom: 4px;
+	transform: translateX(-20px);
+    opacity: 0;
+    visibility: hidden;
 }
 
+.container dl dt:nth-of-type(1){transition: all 0.3s ease;}
+.container dl dt:nth-of-type(2){transition: all 0.5s ease;}
+.container dl dt:nth-of-type(3){transition: all 0.7s ease;}
+.container dl dt:nth-of-type(4){transition: all 0.9s ease;}
+.container dl dt:nth-of-type(5){transition: all 1.1s ease;}
+.container dl dt:nth-of-type(6){transition: all 1.3s ease;}
+/*
+.container dl dt:nth-of-type(1){-webkit-animation-delay: 0.3s;}
+.container dl dt:nth-of-type(2){-webkit-animation-delay: 0.5s;}
+.container dl dt:nth-of-type(3){-webkit-animation-delay: 0.7s;}
+.container dl dt:nth-of-type(4){-webkit-animation-delay: 0.9s;}
+.container dl dt:nth-of-type(5){-webkit-animation-delay: 1.1s;}
+.container dl dt:nth-of-type(6){-webkit-animation-delay: 1.3s;}
+*/
+/*set the dd's oppacity and transform as well to add them to the slide in effect*/
 .container dd{
+	transform: translateX(-20px);
+    opacity: 0;
 	display: block;
 	max-height: 0px;
 	overflow: hidden;
@@ -175,6 +207,62 @@ body, .wrapper, .container, dd ,.container div {
 }
 /****************************/
 
+.container dt.show-titles{
+  /* this is just another form of hiding an element */
+	transform: translateX(0px);
+	opacity: 1;
+	visibility: visible;
+	/*-webkit-animation: show-dt 1s forwards; /* Safari 4+ */
+	/*-moz-animation:    show-dt 1s forwards; /* Fx 5+ */
+	/*-o-animation:      show-dt 1s forwards; /* Opera 12+ */
+	/*animation:         show-dt 1s forwards; /* IE 10+, Fx 29+ */
+	
+}
+.container dd.show-titles{
+	transform: translateX(0px);
+	opacity: 1;
+}
+.container dt.show-titles-not{
+  /* this is just another form of hiding an element 
+	transform: translateX(-30px);
+	opacity: 0;*/
+	-webkit-animation: hide-dt 1s forwards; /* Safari 4+ */
+	-moz-animation:    hide-dt 1s forwards; /* Fx 5+ */
+	-o-animation:      hide-dt 1s forwards; /* Opera 12+ */
+	animation:         hide-dt 1s forwards; /* IE 10+, Fx 29+ */
+}
+
+@keyframes show-dt {
+  0% {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  75%{
+  	transform: translateX(0px);
+    opacity: 1;
+    width: calc(100%+20px);
+  }
+  100% {
+    transform: translateX(0px);
+    opacity: 1;
+    width: calc(100%);
+  }
+}
+
+@keyframes hide-dt {
+  0% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+}
+
+
+/****************************/
+
 [class*='grid-'] {
   /*float: left;}*/
   display: table-cell;
@@ -186,19 +274,19 @@ body, .wrapper, .container, dd ,.container div {
 	margin: 0px;
 }
 
+.grid-20{
+	width: 20%;
+}
 .grid-30{
 	width: 30%;
 }
-
-.grid-70{
-	width: 70%;
-}
-
 .grid-40{
 	width: 40%;
 }
-
 .grid-60{
 	width: 60%;
+}
+.grid-80{
+	width: 80%;
 }
 

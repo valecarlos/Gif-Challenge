@@ -8,25 +8,27 @@
 <body ng-app="myScript">
 	<div class="wrapper" ng-controller="news">
 		<div class="header">
-			<button>
+			<div class="grid-20">
+			<button ng-click="showDetails = ! showDetails">
 				<span class= "menu-bar"></span>
 				<span class= "menu-bar"></span>
 			</button>
-			{{currentTitle}}
+			</div>
+			<div id="titleContainer" class="grid-80">{{currentTitle}}</div>
 		</div>
 		<div class="container">
 			<accordion promise="promise">
-				<dt ng-repeat-start="article in articles">
+				<!--<dt ng-repeat-start="article in articles" ng-class="showDetails ? 'show-titles' : 'show-titles-not'">.-->
+				<dt ng-repeat-start="article in articles" ng-class="{'show-titles' : showDetails}">
 					<div class="grid-30">
 						<div class="round-div"></div>
-
 					</div>
 					<div class="grid-70">
 						<h5>{{article.title}}</h5>
 					</div>
 					
 				</dt>
-				<dd ng-repeat-end="">
+				<dd ng-repeat-end="" ng-class="{'show-titles' : showDetails}">
 					<div class="grid-40">
 					<img src={{article.image}} alt="">
 					</div>
