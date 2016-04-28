@@ -9,11 +9,17 @@ body, .wrapper, .container, dd ,.container div {
 }*/
 .wrapper{
 	width: 100%;
-	max-width: 360px;
 	margin: 10px auto;
 	overflow: hidden;
+	max-width: 700px;
 }
-
+/*
+@media only screen and (min-width: 900px) {
+    .wrapper {
+        max-width: 700px;
+    }
+}
+*/
 #titleContainer{
 	color: white;
 	font-size: large;
@@ -22,8 +28,68 @@ body, .wrapper, .container, dd ,.container div {
 	text-overflow: ellipsis;
 	font-weight: bold;
 	text-transform: uppercase;
-	max-width: 100px;
+	padding-right: 20px;
+	transform: translateY(-30px);
+	visibility: none;
+	opacity: 0;
+	/*transition: all 0.7s ease-in-out;*/
 }
+
+#titleContainer.fade-in{
+	-webkit-animation: title-in 0.6s forwards; /* Safari 4+ */
+	-moz-animation:    title-in 0.6s forwards; /* Fx 5+ */
+	-o-animation:      title-in 0.6s forwards; /* Opera 12+ */
+	animation:         title-in 0.6s forwards;
+}
+
+#titleContainer.fade-out{
+	-webkit-animation: title-out 0.4s forwards; /* Safari 4+ */
+	-moz-animation:    title-out 0.4s forwards; /* Fx 5+ */
+	-o-animation:      title-out 0.4s forwards; /* Opera 12+ */
+	animation:         title-out 0.4s forwards;
+}
+
+@keyframes title-in {
+  0% {
+    transform: translateY(-30px);
+	visibility: none;
+	opacity: 0;
+  }
+  40% {
+    transform: translateY(10px);
+	visibility: visibe;
+	opacity: 1;
+  }
+  60% {
+    transform: translateY(-8px);
+	visibility: visibe;
+	opacity: 1;
+  }
+  80% {
+    transform: translateY(3px);
+	visibility: visibe;
+	opacity: 1;
+  }
+  100% {
+    transform: translateY(0px);
+	visibility: visibe;
+	opacity: 1;
+  }
+}
+
+@keyframes title-out {
+  0% {
+    transform: translateY(0px);
+	visibility: visible;
+	opacity: 1;
+  }
+  100% {
+    transform: translateX(-20px);
+	visibility: visibe;
+	opacity: 0;
+  }
+}
+
 .container{
 	background-color: #D4D4D4;
 	padding: 20px;
@@ -31,6 +97,8 @@ body, .wrapper, .container, dd ,.container div {
 }
 
 .header{
+	display: flex;
+	flex-direction: row;
 	height: 40px;
 	background-color: #FF6654;
 	border-radius: 10px 10px 0px 0px;
@@ -39,10 +107,12 @@ body, .wrapper, .container, dd ,.container div {
 
 .header button{
 	float: left;
-	margin: 10px;
+	margin-left: 10px;
+	padding: 10px;
 	border: 1px solid transparent;
 	background-color: transparent;
 	cursor: pointer;
+	outline:none;
 }
 .menu-bar{
 	background-color: white;
@@ -68,6 +138,8 @@ body, .wrapper, .container, dd ,.container div {
 }
 
 .container dt{
+	display: flex;
+	flex-direction: row;
 	cursor: pointer;
 	margin-top: 4px;
 	background-color: white;
@@ -84,11 +156,6 @@ body, .wrapper, .container, dd ,.container div {
 .container dl dt:nth-of-type(5){transition: all 1.1s ease;}
 .container dl dt:nth-of-type(6){transition: all 1.3s ease;}
 /*
-.container dl dt:nth-of-type(1){-webkit-animation-delay: 0.3s;}
-.container dl dt:nth-of-type(2){-webkit-animation-delay: 0.5s;}
-.container dl dt:nth-of-type(3){-webkit-animation-delay: 0.7s;}
-.container dl dt:nth-of-type(4){-webkit-animation-delay: 0.9s;}
-.container dl dt:nth-of-type(5){-webkit-animation-delay: 1.1s;}
 .container dl dt:nth-of-type(6){-webkit-animation-delay: 1.3s;}
 */
 /*set the dd's oppacity and transform as well to add them to the slide in effect*/
@@ -207,7 +274,7 @@ body, .wrapper, .container, dd ,.container div {
 }
 /****************************/
 
-.container dt.show-titles{
+.container dt.show-titles, #titleContainer.show-titles{
   /* this is just another form of hiding an element */
 	transform: translateX(0px);
 	opacity: 1;
@@ -263,6 +330,8 @@ body, .wrapper, .container, dd ,.container div {
 
 /****************************/
 
+
+
 [class*='grid-'] {
   /*float: left;}*/
   display: table-cell;
@@ -280,11 +349,25 @@ body, .wrapper, .container, dd ,.container div {
 .grid-30{
 	width: 30%;
 }
+/*Align vertically with flex box only for the dt, if this was used for the dd as well it would spoil its behaviour*/
+dt>.grid-30, dt>.grid-70{
+	display: flex;
+}
+dt>.grid-30, dt>.grid-70, .header .grid-20, .header .grid-80{
+    align-self: center;
+}
+dt>.grid-30{
+	justify-content: center;
+}
+
 .grid-40{
 	width: 40%;
 }
 .grid-60{
 	width: 60%;
+}
+.grid-70{
+	width: 70%;
 }
 .grid-80{
 	width: 80%;

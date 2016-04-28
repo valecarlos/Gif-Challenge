@@ -1,10 +1,18 @@
 var app = angular.module('myScript', []);
 
+app.config(['$httpProvider', function($httpProvider) {
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    }
+]);
+
 app.controller('news', function($scope, $http, $timeout){
-	$scope.promise = $http.get('http://www.carlosvalencia.co/news_mock.json').success(function(data) {
+	//load the information from the jsonfile - in a promise so we can use its result later in the directive
+	$scope.promise = $http.get('http://carlosvalencia.co/news_mock.json').success(function(data) {
     	$scope.articles = data;
 	});
-	$scope.currentTitle = "my - title";
+	//initialize variables that will be used later in the scope
+	$scope.currentTitle = "";
     $scope.showDetails = false;
 });
 
@@ -16,10 +24,13 @@ app.directive('accordion', function($timeout, $q){
 		scope: {
 			//bind the showDetails into the scope so it can be seen by all of the accordion elements
 	    	promise: '&?',
-	    	currentTitle: '=?',
-	    	showDetails: '=?bind'
+	    	currentTitle: '=',
+	    	showDetails: '=?bind',
+	    	artic: '='
 	    },
-		template: '<dl ng-transclude></dl>',
+	    //add the current-title to the html tag so it can be seen by the directive and make the 
+	    //two way binding.
+		template: '<dl ng-transclude promise="promise" current-title="currentTitle"></dl>',
 		link: function(scope,element){
 			//promise used for async calls, in this case the json load
 			var promise = scope.promise ? scope.promise() : $q.resolve();
@@ -28,10 +39,12 @@ app.directive('accordion', function($timeout, $q){
 				element.find('dt').on('click', function(event){
 					/*first find all the dd elements and hide them, they have to be angular elements 
 					otherwise the hasClass function and the others won't work*/
+					/*this function manages the toggle of classes to show/hide content*/
 					var self = this;
-					console.log(angular.element(self).children);
 					var nextElement = angular.element(self).next();
 					var wasShowing = nextElement.hasClass("is-showing");
+					var titleElement = angular.element(document.querySelector('#titleContainer'));
+					console.log(titleElement);
 
 					for (var i=0; i< element.find('dd').length;i++){
 						if (angular.element(element.find('dd')[i]).hasClass("is-showing")) {
@@ -39,91 +52,28 @@ app.directive('accordion', function($timeout, $q){
 							angular.element(element.find('dd')[i]).addClass("is-hidden");
 						}
 					}
+					//angular.element(document.querySelector('#titleContainer')).removeClass("show-titles");
+					if( titleElement.hasClass("fade-in")){
+						//add class before we remove the next one, so the animations don't jump
+						titleElement.addClass("fade-out");
+						titleElement.removeClass("fade-in");
+					}
+					
 
 					if (!wasShowing){
 						nextElement.removeClass("is-hidden");
 						nextElement.addClass("is-showing");
-					}	
-					//console.log(scope);
-					scope.currentTitle = "i've changed";
-					scope.$apply() ;
-
-	/*
-					//toggle classes as defined on the CSS
-					var myToggleClasses = function(elToToggle){
-					if (elToToggle.hasClass("is-showing")){
-							elToToggle.removeClass("is-showing");
-							elToToggle.addClass("is-hidden")
-						} 
-						else if (elToToggle.hasClass("is-hidden")) {
-							elToToggle.removeClass("is-hidden");
-							elToToggle.addClass("is-showing");
-						}
-						else{
-							elToToggle.addClass("is-showing");
-						}
-
+						//angular.element(document.querySelector('#titleContainer')).addClass("show-titles");
+						//angular.element(document.querySelector('#titleContainer')).addClass("fade-out");
+						titleElement.addClass("fade-in");
+						titleElement.removeClass("fade-out");
 					}
-
-					for (var i=0; i< element.find('dd').length;i++){
-						if (angular.element(self).next() == angular.element(element.find('dd')[i]))
-							{console.log("eureka");}
-						console.log(angular.element(self).next());
-						console.log(angular.element(element.find('dd')[i]));
-						if (angular.element(element.find('dd')[i]).hasClass("is-showing")) {
-						angular.element(element.find('dd')[i]).removeClass("is-showing");
-						angular.element(element.find('dd')[i]).addClass("is-hidden");
-					};
-					}
-					
-					
-					//console.log("this is: " + this[0].tagName);
-					//if the element clicked is the DT tag hence ->this<- the next element is the DD so we want to close it
-					if (event.target == self){
-						//element.find("dd").css('display', 'none');
-						var ddToOpen = angular.element(event.target).next();
-
-						//ddToOpen.removeClass("is-hidden");
-						//ddToOpen.addClass("is-showing");
-						myToggleClasses(ddToOpen);
-
-					}
-
-					else{
-						var parent = angular.element(event.target)[0].parentElement;
-						//if any of the children is clicked go find the DT element
-						if (parent == self){
-							//element.find("dd").css('display', 'none');
-							var ddToOpen = angular.element(parent).next();
-							//ddToOpen.removeClass("is-hidden");
-							//ddToOpen.addClass("is-showing");
-							myToggleClasses(ddToOpen);
-						}
-						else {
-							//if any of the Grand-children is clicked go find the DT element
-							var grandParent = angular.element(parent)[0].parentElement;
-							if (grandParent == self){
-								//element.find("dd").css('display', 'none');
-								var ddToOpen = angular.element(grandParent).next();
-								//ddToOpen.removeClass("is-hidden");
-								//ddToOpen.addClass("is-showing");
-								myToggleClasses(ddToOpen);
-							}
-
-						}
-					}*/
-					
+					//get the article title property from the element clicked and assign it to the scope variable
+					scope.currentTitle = angular.element(self)[0].innerText;
+					scope.$apply() ;	
 				});
 			});
 		}
 	};
 });
 
-/*this would be using jquery- but it doesn't work when angular is in use
-var myAccordion = $('.accordion');
-myAccordion.find('dd').hide();
-myAccordion.find('dt').on('click', function(){
-	console.log("i should slide down");
-	$this.next('dd').slideDown();
-});
-*/

@@ -19,7 +19,7 @@
 		<div class="container">
 			<accordion promise="promise">
 				<!--<dt ng-repeat-start="article in articles" ng-class="showDetails ? 'show-titles' : 'show-titles-not'">.-->
-				<dt ng-repeat-start="article in articles" ng-class="{'show-titles' : showDetails}">
+				<dt ng-repeat-start="article in articles" ng-class="{'show-titles' : showDetails}" artic={{article.title}}>
 					<div class="grid-30">
 						<div class="round-div"></div>
 					</div>
