@@ -25,7 +25,9 @@ body, .wrapper, .container, dd ,.container div {
 	font-size: large;
 	white-space: nowrap;
 	overflow: hidden;
+	text-overflow: clip;
 	text-overflow: ellipsis;
+	text-overflow: "…";
 	font-weight: bold;
 	text-transform: uppercase;
 	padding-right: 20px;
@@ -167,7 +169,7 @@ body, .wrapper, .container, dd ,.container div {
 	overflow: hidden;
 	margin-left: 0px;
 	background-color: white;
-	transition: all 2s ease;
+	/*transition: all 2s ease;*/
 }
 .container dd img{
 	height: 100%;
@@ -327,10 +329,7 @@ body, .wrapper, .container, dd ,.container div {
   }
 }
 
-
 /****************************/
-
-
 
 [class*='grid-'] {
   /*float: left;}*/
@@ -359,7 +358,9 @@ dt>.grid-30, dt>.grid-70, .header .grid-20, .header .grid-80{
 dt>.grid-30{
 	justify-content: center;
 }
-
+.header .grid-80, .header .grid-20{
+	display: inline;
+}
 .grid-40{
 	width: 40%;
 }
